@@ -1,0 +1,261 @@
+%5th order polynomial
+clear all;
+
+x=[-9.5 -6 -3.5 -.5 2 5 6.5 10]';
+fx=[-3764.8 -1165.6 -1520.5 -233.4 199.2 -84.1 612.9 2506.9]';
+
+g0=x.^0;
+g1=x.^1;
+g2=x.^2;
+g3=x.^3;
+g4=x.^4;
+g5=x.^5;
+
+al00=g0'*g0;
+al01=g0'*g1;
+al02=g0'*g2;
+al03=g0'*g3;
+al04=g0'*g4;
+al05=g0'*g5;
+al10=al01;
+al11=g1'*g1;
+al12=g1'*g2;
+al13=g1'*g3;
+al14=g1'*g4;
+al15=g1'*g5;
+al20=al02;
+al21=al12;
+al22=g2'*g2;
+al23=g2'*g3;
+al24=g2'*g4;
+al25=g2'*g5;
+al30=al03;
+al31=al13;
+al32=al23;
+al33=g3'*g3;
+al34=g3'*g4;
+al35=g3'*g5;
+al40=al04;
+al41=al14;
+al42=al24;
+al43=al34;
+al44=g4'*g4;
+al45=g4'*g5;
+al50=al05;
+al51=al15;
+al52=al25;
+al53=al35;
+al54=al45;
+al55=g5'*g5;
+
+b0=fx'*g0;
+b1=fx'*g1;
+b2=fx'*g2;
+b3=fx'*g3;
+b4=fx'*g4;
+b5=fx'*g5;
+
+Alpha=[al00 al01 al02 al03 al04 al05; 
+    al10 al11 al12 al13 al14 al15; 
+    al20 al21 al22 al23 al24 al25;
+    al30 al31 al32 al33 al34 al35;
+    al40 al41 al42 al43 al44 al45;
+    al50 al51 al52 al53 al54 al55;];
+
+B=[b0 b1 b2 b3 b4 b5]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+a3=A(4)
+a4=A(5)
+a5=A(6)
+
+xc=[min(x):(max(x)-min(x))/100:max(x)]';
+gc0=xc.^0;
+gc1=xc.^1;
+gc2=xc.^2;
+gc3=xc.^3;
+gc4=xc.^4;
+gc5=xc.^5;
+pc=a0*gc0+a1*gc1+a2*gc2+a3*gc3+a4*gc4+a5*gc5;
+
+p=a0*g0+a1*g1+a2*g2+a3*g3+a4*g4+a5*g5;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+tt1='Midterm problem 2\newline';
+name='B.D.Schoenrock - ';
+tt=[tt1,name,date];
+
+figure
+hold on;
+title(tt);
+plot(x,fx,'k*')
+plot(xc,pc,'k-')
+
+xlabel('x in unitless numbers')
+ylabel('f(x) in unitless numbers')
+
+%{
+a0 = -374.8875
+a1 = 283.1034
+a2 = -2.3034
+a3 = -6.7535
+a4 = -0.0500
+a5 =  0.0756
+ss = 5.3659e+005
+ssdp = 6.7073e+004
+%}
+
+
+
+%4th order polynomial
+
+Alpha=[al00 al01 al02 al03 al04; 
+    al10 al11 al12 al13 al14; 
+    al20 al21 al22 al23 al24;
+    al30 al31 al32 al33 al34;
+    al40 al41 al42 al43 al44;];
+
+B=[b0 b1 b2 b3 b4]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+a3=A(4)
+a4=A(5)
+
+pc=a0*gc0+a1*gc1+a2*gc2+a3*gc3+a4*gc4;
+
+p=a0*g0+a1*g1+a2*g2+a3*g3+a4*g4;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+plot(xc,pc,'k.-')
+
+%{
+a0 = -323.5432
+a1 = 86.7983
+a2 = -9.6962
+a3 = 2.4068
+a4 = 0.0498
+ss = 9.3740e+005
+ssdp = 1.1717e+005
+%}
+
+
+
+
+%3rd Order polynomial
+Alpha=[al00 al01 al02 al03; 
+    al10 al11 al12 al13; 
+    al20 al21 al22 al23;
+    al30 al31 al32 al33;];
+
+B=[b0 b1 b2 b3]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+a3=A(4)
+
+pc=a0*gc0+a1*gc1+a2*gc2+a3*gc3;
+
+p=a0*g0+a1*g1+a2*g2+a3*g3;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+plot(xc,pc,'k--')
+
+%{
+a0 = -381.5773
+a1 = 83.0079
+a2 = -4.6716
+a3 = 2.4700
+ss = 9.5272e+005
+ssdp = 1.1909e+005
+%}
+
+
+
+
+%2nd Order polynomial
+Alpha=[al00 al01 al02; 
+    al10 al11 al12; 
+    al20 al21 al22;];
+
+B=[b0 b1 b2]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+
+pc=a0*gc0+a1*gc1+a2*gc2;
+
+p=a0*g0+a1*g1+a2*g2;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+plot(xc,pc,'k.-.')
+
+%{
+a0 = -457.0531
+a1 = 257.5157
+a2 = -2.6550
+ss = 2.8094e+006
+ssdp = 3.5117e+005
+%}
+
+legend('raw data','5th order fit','4th order fit','3rd order fit','2nd order fit',2);
+legend('boxoff')
+
+
+
+%{
+
+to reitterate my answers
+
+for the 5th order polynomial
+a0 = -374.8875
+a1 = 283.1034
+a2 = -2.3034
+a3 = -6.7535
+a4 = -0.0500
+a5 =  0.0756
+ss = 5.3659e+005
+ssdp = 6.7073e+004
+
+for the 4th order polynomial
+a0 = -323.5432
+a1 = 86.7983
+a2 = -9.6962
+a3 = 2.4068
+a4 = 0.0498
+ss = 9.3740e+005
+ssdp = 1.1717e+005
+
+for the 3rd order polynomial
+a0 = -381.5773
+a1 = 83.0079
+a2 = -4.6716
+a3 = 2.4700
+ss = 9.5272e+005
+ssdp = 1.1909e+005
+
+and for the 2nd order
+a0 = -457.0531
+a1 = 257.5157
+a2 = -2.6550
+ss = 2.8094e+006
+ssdp = 3.5117e+005
+%}
+

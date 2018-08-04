@@ -1,0 +1,38 @@
+%linear program Brad Schoenrock
+% book page 101
+
+% maximization problem 
+% the output gives the negitive of the functional value
+% and the negitive of the variable values
+
+f = [-1 ];
+
+A =  [-1 -2 1 -1;
+      4 3 4 -2;];
+b=[0; 3];
+
+Aeq=[-1 -1 2 1;];
+beq=[1];
+
+lb = [-999999999 0 0 0];
+
+[x,fval,exitflag,output,lambda] = linprog(f,A,b,Aeq,beq,lb);
+
+%{
+starts with output stuff
+x is a vector of the variables
+fval is the optimal value for the objective function
+exit flag is a number that tells you the reason for the termination 
+    of the algorithm
+output is a structure that tells you certian other things such as the
+    number of iterations
+lambda is the values of the lagrange multipliers (AKA dual variables)
+
+for the inputs we of course need to pass it f,a,&b
+the next two spots are for equality constraints
+first the A matrix associated with the equalities
+then the b vector that goes with the equalities
+next we need to pass the lower bound for x 
+and after that we can pass it the upper bound for x
+%}
+

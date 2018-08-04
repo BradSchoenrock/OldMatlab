@@ -1,0 +1,13 @@
+%Function m-file needed to solve nonlinear Curve fitting class example 1
+%version 2007-10-08 D.W. Donovan
+function f = fun(a)
+
+load('tenloopb.mat','-ascii');
+x=tenloopb(:,1);
+fx=tenloopb(:,2);
+
+a0=a(1);
+a1=a(2);
+
+g=a0*exp(x/a1)-1);
+f=(g-fx)'*(g-fx);

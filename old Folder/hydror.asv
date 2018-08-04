@@ -1,0 +1,49 @@
+%exapmle program to learn matlab
+%this program plots the radial wave functions and
+%radial probablility density functions of the 
+%first six hydrogen electron levels
+%version 2008-01-17 B.S.
+
+clear all;
+
+V1=100;
+V2=50;
+R1=5;
+R2=10;
+R3=25;
+R4=50;
+R5=75;
+R=(1:1:80)';
+
+P0=((V2./(R+R1)).^2).*R;
+P1=((V1./(R+R1)).^2).*R;
+P2=((V1./(R+R2)).^2).*R;
+P3=((V1./(R+R3)).^2).*R;
+P4=((V1./(R+R4)).^2).*R;
+P5=((V1./(R+R5)).^2).*R;
+
+figure;
+hold on;
+
+ttla=('Power Vs. Resistance');
+tt2='B.S.';
+tta=[ttla,'/newline',tt2,date];
+title(tta)
+xlabel('Resistance in ohms');
+ylabel('Power in Watts');
+axis([0 80  0 600]);
+
+plot(R,P0,'diamond');
+text(10,125,'Pa2');
+plot(R,P1);
+text(10,450,'Pa1');
+plot(R,P2,'g.');
+text(10,270,'Pb1','color','g');
+plot(R,P3,'-.','color','m');
+text(30,115,'Pc1','color','m');
+plot(R,P4,'k--');
+text(10,50,'Pd1','color','k');
+plot(R,P5,'square','color','c');
+text(30,15,'Pe1','color','c');
+hold off
+

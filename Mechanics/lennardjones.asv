@@ -1,0 +1,71 @@
+%this program plots the Lennard Jones "6-12" potential
+
+clear all;
+
+a=1.09E-7;
+b=6.84E-5;
+r=(.3:.01:.7);
+%defines some variables to use
+
+f1=(a*(r.^-12))-(b*(r.^-6));
+F1=@(r)(a*(r(1).^-12))-(b*(r(1).^-6));
+
+f2=-(a*-12*(r.^-13))+(b*-6*(r.^-7));
+F2=@(r)(-((a*-12*(r(1).^-13))-(b*-6*(r(1).^-7))));
+%defines my functions
+
+%b)
+figure;
+hold on;
+
+ttla=('Potential vs. radial distance');
+tt2='Brad Schoenrock ';
+tta=[ttla,'\newline',tt2,date];
+title(tta)
+xlabel('r (nm)');
+ylabel('Potential (eV)');
+axis([.3  .7  -.1 .1]);
+
+plot(r,f1,'black-');
+%plots potential vs. radial distance
+
+[r0,fval] = fminsearch(F1,0.35);
+plot(r0,fval,'blackx','markersize',12);
+r0
+fval
+%finds the min of the function and marks it
+%{
+the
+r0 =0.3836
+fval =-0.0107
+%}
+
+hold off
+
+%c)
+figure;
+hold on;
+
+ttla=('Force vs. radial distance');
+tt2='Brad Schoenrock ';
+tta=[ttla,'\newline',tt2,date];
+title(tta)
+xlabel('r (nm)');
+ylabel('Force (eV)');
+axis([.3  .7  -1 1]);
+
+plot(r,f2,'black-');
+%plots force vs. radial distance
+
+hold off;
+
+%d)
+[y1] = feval(F2, .5)
+%absolute value of (y1) will give the force of attraction at .5 nm
+[y2] = feval(F2, .35)
+%y2 will give the force of repulsion at .35 nm
+
+%{
+y1 =-0.0418
+y2 =0.4681
+%}

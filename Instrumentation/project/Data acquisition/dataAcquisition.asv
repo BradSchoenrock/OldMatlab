@@ -1,0 +1,74 @@
+clear all;
+
+% Set up A/D Boards
+ai = analoginput('nidaq',1);
+chan = addchannel(ai,0:7);
+duration = 10;
+
+set(ai,'SampleRate',1);
+ActualRate = get(ai,'SampleRate');
+set(ai,'SamplesPerTrigger',duration*ActualRate);
+preview = duration*ActualRate/100;
+
+% Create files to store data
+savefile1 = 'projectdataA.mat';
+savefile2 = 'projectdataB.mat';
+
+start(ai)
+while ai.SamplesAcquired < preview
+end
+
+[data, time] = getdata(ai);
+tdata = [time data];
+t = tdata(:,1);
+T0 = tdata(:,2);
+T1 = tdata(:,3);
+T2 = tdata(:,4);
+T3 = tdata(:,5);
+T4 = tdata(:,6);
+T5 = tdata(:,7);
+T6 = tdata(:,8);
+T7 = tdata(:,9);
+
+subplot(221), plot(t,T0), plot(t,T1);
+grid on
+axis([0 30 -10 10])
+axis('auto y')
+title('Sensors 0 and 1 - 2cm distance')
+xlabel('Time')
+ylabel('Temperature')
+
+subplot(222), plot(t,T2), plot(t,T3);
+grid on
+axis([0 30 -10 10])
+axis('auto y')
+title('Sensors 2 and 3 - 4cm distance')
+xlabel('Time')
+ylabel('Temperature')
+
+subplot(223), plot(t,T4), plot(t,T5);
+grid on
+axis([0 30 -10 10])
+axis('auto y')
+title('Sensors 4 and 5 - 6cm distance')
+xlabel('Time')
+ylabel('Temperature')
+
+subplot(224), plot(t,T6), plot(t,T7);
+grid on
+axis([0 30 -10 10])
+axis('auto y')
+title('Sensors 6 and 7 - 8cm distance')
+xlabel('Time')
+ylabel('Temperature')
+
+delete(ai)
+
+%{
+fiveloopb(:,1) = id';
+fiveloopb(:,2) = vd';
+fiveloopb(:,3) = vr';
+
+save(savefile1,'data','-ASCII','-TABS');
+save(savefile2,'fiveloopb','-ASCII','-TABS');
+%}

@@ -1,0 +1,81 @@
+% non linear analysis on a diode iv curve
+% Brad Schoenrock
+clear all;
+
+a00= [0 .045];
+
+%{
+load('oneloopb.mat','-ascii');
+x=oneloopb(:,2);
+fx=oneloopb(:,1);
+a=fminsearch(@fnnonlindiodelab,a00);
+%}
+%{
+load('twoloopb.mat','-ascii');
+x=twoloopb(:,2);
+fx=twoloopb(:,1);
+a=fminsearch(@fnnonlindiodelab2,a00);
+%}
+%{
+load('threeloopb.mat','-ascii');
+x=threeloopb(:,2);
+fx=threeloopb(:,1);
+a=fminsearch(@fnnonlindiodelab3,a00);
+%}
+%{
+load('fiveloopb.mat','-ascii');
+x=fiveloopb(:,2);
+fx=fiveloopb(:,1);
+a=fminsearch(@fnnonlindiodelab5,a00);
+%}
+%%{
+load('tenloopb.mat','-ascii');
+x=tenloopb(:,2);
+fx=tenloopb(:,1);
+a=fminsearch(@fnnonlindiodelab10,a00);
+%}
+
+figure
+plot(x,fx,'r*')
+t2='Raw Data for Diode';
+name='B.D.Schoenrock ';
+t=['\newline',t2,'\newline',name,date];
+title(t)
+xlabel('Voltage across diode, Volts, (V)')
+ylabel('Current through the diode, Amps, (i)')
+
+a0=a(1)
+a1=a(2)
+
+ffx=a0*(exp(x./a1)-1);
+ss=(fx-ffx)'*(fx-ffx)
+xc=[min(x):(max(x)-min(x))/100:max(x)]';
+fxc=a0.*(exp(xc./a1)-1);
+
+la00=['a00 = ',num2str(a00)];
+la0=['a0 = ',num2str(a0)];
+la1=['a1 = ',num2str(a1)];
+lss=['sm Sq = ',num2str(ss)];
+lssdp=['sm Sq DP = ',num2str(ss/size(fx,1))];
+
+figure
+hold on;
+
+t2='Data Fitted to F(x) = a0(exp(x/a1)-1)';
+name='B.D.Schoenrock ';
+t=[t1,'\newline',t2,'\newline',name,date];
+title(t)
+xlabel('Voltage across diode, Volts, (V)')
+ylabel('Current through the diode, Amps, (i)')
+
+plot(x,fx,'r*')
+plot(xc,fxc,'b')
+plot(min(xc),max(fxc),'w')
+plot(min(xc),max(fxc),'w')
+plot(min(xc),max(fxc),'w')
+plot(min(xc),max(fxc),'w')
+plot(min(xc),max(fxc),'w')
+plot(min(xc),max(fxc),'w')
+
+legend('raw data','fitted curve',la00,la0,la1,lss,lssdp,2);
+legend('boxoff')

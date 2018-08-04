@@ -1,0 +1,35 @@
+
+
+
+f = [-5; -4; -6];
+A =  [1 -1  1
+      3  2  4
+      3  2  0];
+b = [20; 42; 30];
+lb = [0 0 0];
+
+%{
+starts with output stuff
+x is a vector of the variables
+fval is the optimal value for the objective function
+exit flag is a number that tells you the reason for the termination 
+    of the algorithm
+output is a structure that tells you certian other things such as the
+    number of iterations
+lambda is the values of the lagrange multipliers (AKA dual variables)
+
+for the inputs we of course need to pass it f,a,&b
+the next two spots are for equality constraints
+first the A matrix associated with the equalities
+then the b vector that goes with the equalities
+%}
+
+[x,fval,exitflag,output,lambda] = linprog(f,A,b,[],[],lb);
+
+
+
+
+ANS={'optimal x' 'optimal value' 'exit flag' 'output' 'lambda';
+    x fval exitflag output lambda;}
+
+

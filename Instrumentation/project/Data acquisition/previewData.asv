@@ -1,0 +1,164 @@
+clear all;
+
+ai = analoginput('nidaq',1);
+chan = addchannel(ai,0:7);
+duration=30;
+
+set(ai,'SampleRate',100);
+ActualRate = get(ai,'SampleRate');
+set(ai,'SamplesPerTrigger',duration*ActualRate);
+preview = duration*ActualRate/100;
+
+figure
+set(gcf,'doublebuffer','on');
+
+subplot(181)
+p0 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(182)
+p1 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(183)
+p2 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(184)
+p3 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(185)
+p4 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(186)
+p5 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(187)
+p6 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+subplot(188)
+p7 = plot(zeros(preview,1));
+axis([0 preview 2.5 4])
+
+
+
+start(ai)
+while ai.SamplesAcquired < preview
+end
+
+starttime = cputime;
+while ai.SamplesAcquired < duration*ActualRate
+    pdata = peekdata(ai,preview);
+    set(p0,'ydata',pdata(:,1))
+    set(p1,'ydata',pdata(:,2))
+    set(p2,'ydata',pdata(:,3))
+    set(p3,'ydata',pdata(:,4))
+    set(p4,'ydata',pdata(:,5))
+    set(p5,'ydata',pdata(:,6))
+    set(p6,'ydata',pdata(:,7))
+    set(p7,'ydata',pdata(:,7))
+    title(num2str(duration-(cputime - starttime),4))
+    drawnow
+end
+
+[data,time] = getdata(ai);
+
+hh=1; %number of data points kept
+ksize=size(time);
+for kk=1:ksize % kk is a counter through all data points taken
+    if(mod(kk,100)==0)
+        tdata=[time data];
+        t(hh) = time(kk);
+        T0(hh) = data(kk,1);
+        T1(hh) = data(kk,2);
+        T2(hh) = data(kk,3);
+        T3(hh) = data(kk,4);
+        T4(hh) = data(kk,5);
+        T5(hh) = data(kk,6);
+        T6(hh) = data(kk,7);
+        T7(hh) = data(kk,8);
+        hh=hh+1;
+    end
+end
+
+delete(ai)
+
+
+figure
+hold on
+%subplot(181)
+plot(t,T0,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 0')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(182)
+plot(t,T1,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 1')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(183)
+plot(t,T2,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 2')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(184)
+plot(t,T3,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 3')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(185)
+plot(t,T4,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 4')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(186)
+plot(t,T5,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 5')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(187)
+plot(t,T6,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 6')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+figure
+hold on
+%subplot(188)
+plot(t,T7,'r*');
+axis([0 duration 2.5 4])
+title('Sensors 7')
+xlabel('Time, t, (seconds)')
+ylabel('Voltage, (volts)')
+hold off
+
+save('steel.mat','tdata','-ASCII','-TABS');

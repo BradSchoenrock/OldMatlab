@@ -1,0 +1,63 @@
+clear all
+
+L=10;
+a=1;
+
+xl=[0:0.01:L/3];
+xr=[L/3:0.01:L];
+x=[0:0.01:L];
+yl0=a.*xl.^2;
+yr0=a/4*(L-xr).^2;
+
+t=0;
+yn=zeros(size(x));
+for n=1:10
+    bn=(a*L^2)/(4*n^3*pi^3)*(-8+(10*n*pi/3)*(sin(n*pi/3))+((2*n*pi/3+1)^2+11)*cos(n*pi/3));
+    yn=yn+bn*sin(n*pi*x/L)*cos(n*pi*t/L);
+end
+
+figure
+hold on
+plot(xl,yl0,'k-',xr,yr0,'k-');
+title(strcat('problem 16 pg 246: guitar string for t=',num2str(t)))
+axis([0 L -15 15])
+xlabel('x')
+ylabel('y')
+hold off
+
+
+
+t=0.4;
+yn=zeros(size(x));
+for n=1:10
+    bn=(a*L^2)/(4*n^3*pi^3)*(-8+(10*n*pi/3)*(sin(n*pi/3))+((2*n*pi/3+1)^2+11)*cos(n*pi/3));
+    yn=yn+bn*sin(n*pi*x/L)*cos(n*pi*t/L);
+end
+
+figure
+hold on
+plot(xl,yl0,'k-',xr,yr0,'k-',x,yn,'k-');
+title(strcat('problem 16 pg 246: guitar string for t=',num2str(t)))
+axis([0 L -15 15])
+xlabel('x')
+ylabel('y')
+hold off
+
+
+
+
+t=0.8;
+yn=zeros(size(x));
+for n=1:10
+    bn=(a*L^2)/(4*n^3*pi^3)*(-8+(10*n*pi/3)*(sin(n*pi/3))+((2*n*pi/3+1)^2+11)*cos(n*pi/3));
+    yn=yn+bn*sin(n*pi*x/L)*cos(n*pi*t/L);
+end
+
+figure
+hold on
+plot(xl,yl0,'k-',xr,yr0,'k-',x,yn,'k-');
+title(strcat('problem 16 pg 246: guitar string for t=',num2str(t)))
+axis([0 L -15 15])
+xlabel('x')
+ylabel('y')
+hold off

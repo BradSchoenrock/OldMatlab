@@ -1,0 +1,28 @@
+%exapmle program to learn matlab
+%this program plots a matter wave packet
+%version 2008-01-17 B.S.
+
+clear all;
+
+x=(-10:.1:10)';
+
+E=exp(-x.^2/2);
+
+F1=(E.*cos(5*x));
+figure;
+hold on;
+
+ttla=('Matter wave packet');
+tt2='Brad Schoenrock ';
+tta=[ttla,'\newline',tt2,date];
+title(tta)
+xlabel('');
+ylabel('');
+axis([-4 4  -1 1]);
+
+plot(x,E,'b.');
+text(1,.85,'envelope function','color','blue');
+plot(x,F1,'r.');
+text(.85,-.85,'inner function','color','red');
+
+hold off

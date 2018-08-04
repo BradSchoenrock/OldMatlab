@@ -1,0 +1,56 @@
+clear all
+
+m=10;
+k=250;
+b=3;
+B=b/(2*m);
+w=sqrt(k/m);
+ic=[1;0];
+%defines some paramaters
+
+[t,y]=ode45(@funkderivs2,[0 20],ic,[],B,w);
+%ode stuff that calls funkderivs for a function
+
+figure;
+hold on;
+
+ttla=('damped harmonic oscilator');
+tt2='Brad Schoenrock ';
+tta=[ttla,'\newline',tt2,'\newline',date];
+title(tta)
+xlabel('time');
+ylabel('x displacement');
+axis([-20 20  -10 10]);
+%creates a figure and tells it how big to be, adds labels ect...
+
+plot(y(:,1),t,'b-');
+text(2,45,'path of projectile with air resistance','color','blue');
+%plots path of projectile with air resistance
+
+tempy=y(:,3);
+done=0; 
+%defines some paramaters to use in my loop
+
+for i= 1:1:size(tempy)
+    if tempy(i)<=0 & done==0
+        mark1 = i-1;
+        mark2= i;
+        done=1;
+    end
+end
+%tells me where the zero crossing is in the y data, mark1 is before it 
+%hits and mark2 is after it hits
+
+tempx = y(:,1);
+x1=tempx(mark1)
+x2=tempx(mark2)
+%finds the corrisponding x values
+
+S1=('the impact is between ');
+S2=num2str(x1);
+S3=('m and ');
+S4=num2str(x2);
+S5=('m from the release point');
+S=[S1 S2 S3 S4 S5];
+text(2,95,S);
+%prints on my graph a range for where the impact is

@@ -1,0 +1,19 @@
+%linear program Brad Schoenrock
+% book page 139 exercize 5-2-12
+
+% minimization problem
+
+clear all;
+f = [10 12 8 10 0 0];
+
+Aeq=[4 5 4 5 1 0;
+    1 1 1 1 0 1;];
+beq=[1000; 225;];
+
+lb = [0 0 0 0 0 0];
+ub = [130 110 70 65 999 175];
+
+[x,fval,exitflag,output,lambda] = linprog(f,[],[],Aeq,beq,lb,ub);
+
+
+

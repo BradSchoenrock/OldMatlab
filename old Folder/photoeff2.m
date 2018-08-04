@@ -1,0 +1,53 @@
+%finds a best fit line for stoping potential vs frequency
+%version 2008 16 march
+%Brad Schoenrock
+
+clear all;
+
+x= [8.21e14;8.21e14;8.21e14;8.21e14;8.21e14;7.45e14;7.45e14;
+    7.45e14;7.45e14;7.45e14;6.89e14;6.89e14;6.89e14;6.89e14;
+    6.89e14;5.35e14;5.35e14;5.35e14;5.35e14;5.35e14;5e14;5e14;
+    5e14;5e14;5e14;8.21e14;7.45e14;6.89e14;5.35e14;5e14;];
+
+x=x*1e-14;
+
+y= [1.804;1.785;1.771;1.737;1.578;1.539;1.529;1.513;1.480;1.341;1.358;
+    1.351;1.342;1.326;1.235;.833;.830;.820;.804;.729;.806;.804;.781;
+    .733;.619;1.879;1.537;1.381;.821;.674;];
+
+
+n(:,2)=x;
+n(:,1)=ones(size(x));
+c=n\y;
+
+slope=c(2)*1e-14
+yintercept=c(1)
+
+sp='The Slope is h = ';
+s=num2str(slope);
+st=[sp,s,' eV*s'];
+
+si='The Y Intercept is W = ';
+i=num2str(yintercept);
+sti=[si,i,' eV'];
+
+xp=[min(x):(max(x)-min(x))/100 :max(x)]';
+yp=c(2)*xp+c(1);
+
+figure;
+hold on
+plot(x,y,'r*');
+plot(xp,yp,'b-');
+plot(max(x),max(y),'w.')
+plot(max(x),max(y),'w.')
+plot(max(x),max(y),'w.')
+plot(max(x),max(y),'w.')
+legend('Actual Data', 'fitted line',st,sti,'the threshold frequency is 2.77e14 Hz',2)
+legend('boxoff')
+t1='Photoelectric effect, stoping potential vs. frequency';
+t3='Brad Schoenrock'
+t0='\newline';
+t=[t1,t0,t3,date];
+title(t)
+xlabel('frequency in xe14 hertz')
+ylabel('stoping potential in eV')

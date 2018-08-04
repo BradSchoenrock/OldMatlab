@@ -1,0 +1,41 @@
+%exapmle program to learn matlab
+%Brad Schoenrock
+%1-14-2009
+
+clear all;
+
+T=(0:.001:1)';
+
+P=600*(exp(-8*T)-exp(-16*T));
+P0=@(x) 600*(exp(-8*x)-exp(-16*x));
+
+for i= 1:1:size(T)-1;
+    if P0(i+1)=P0(i);
+        z1=T(i+1);
+    end
+end
+% the max is at z1
+z1
+P0(z1)
+
+figure;
+hold on;
+
+ttla=('Power Vs. Time');
+tt2='Brad Schoenrock';
+tta=[ttla,'\newline',tt2,date];
+title(tta)
+xlabel('Time in sec (s)');
+ylabel('Power in (W)');
+axis([0 1  0 500]);
+
+plot(T,P,'.','color','k');
+hold off
+
+
+%{ 
+our power is max at 
+T = 1 sec
+P = 0.2012 watts
+%}
+

@@ -1,0 +1,14 @@
+%Function m-file needed to solve nonlinear Curve fitting nonlinear problem
+%3
+function f = fun(a)
+
+load('nlonelor.mat','-ascii');
+x=nlonelor(:,1);
+fx=nlonelor(:,2);
+
+a1=a(1);
+a2=a(2);
+a3=a(3);
+
+g=a1./(a2.^2+(x-a3).^2);
+f=(g-fx)'*(g-fx);

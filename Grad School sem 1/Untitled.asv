@@ -1,0 +1,30 @@
+clear all
+
+L=100;
+T1=100;
+T0=0;
+x=[0:0.01:L];
+
+t=0.01;
+
+T=x;
+
+
+for n=1:1000
+    u=sin(pi*n/L.*x);
+    i=exp(-(pi*n)^(2)*t);
+    a=2*75*cos(n*pi)+50;
+    b=pi*n;
+    T=T+a/b*i.*u;
+        
+end
+
+
+figure
+hold on
+plot(x,T,'k-');
+title(strcat('problem 1 for t=',num2str(t)))
+axis([0 L -110 110])
+xlabel('x in cm')
+ylabel('T in degrees celcius')
+hold off

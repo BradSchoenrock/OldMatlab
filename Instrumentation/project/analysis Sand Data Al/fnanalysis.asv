@@ -1,0 +1,21 @@
+
+function f = fun(a)
+
+load('SandDataAl.mat','-ascii');
+x=SandDataAl(:,1);
+fx1=SandDataAl(:,2);
+fx2=SandDataAl(:,3);
+fx3=SandDataAl(:,4);
+fx4=SandDataAl(:,5);
+fx5=SandDataAl(:,6);
+fx6=SandDataAl(:,7);
+fx7=SandDataAl(:,8);
+fx8=SandDataAl(:,9);
+
+
+a0=a(1);
+a1=a(2);
+a2=a(3);
+
+g=a0*exp(-a1*(x-a2).^2);
+f=(g-fx)'*(g-fx);

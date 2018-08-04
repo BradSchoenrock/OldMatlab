@@ -1,0 +1,30 @@
+%this program plots the van der waals eqn of state
+%version 2010-01-25 B.S.
+
+clear all;
+
+R=;
+T=;
+a=;
+b
+x=(0.05:.05:.5)'; %L/mol
+
+E=R*T/(x-b)+a/x/x;
+
+figure;
+hold on;
+
+ttla=('Matter wave packet');
+tt2='Brad Schoenrock ';
+tta=[ttla,'\newline',tt2,date];
+title(tta)
+xlabel('x');
+ylabel('Re f(x)');
+axis([-25 25  -12 12]);
+
+plot(x,E,'b.');
+text(2,10,'envelope function=(e^-x^2/(2 x))','color','blue');
+plot(x,F1,'r.');
+text(3,-8,'inner function=(cos(k x))','color','red');
+
+hold off

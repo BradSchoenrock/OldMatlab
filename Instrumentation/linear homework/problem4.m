@@ -1,0 +1,100 @@
+%program for linear curve fitting with trig functions
+
+clear all;
+
+load('lincrvtrigh.mat','-ascii');
+x=lincrvtrigh(:,1);
+fx=lincrvtrigh(:,2);
+
+g0=cos(7.3*x);
+g1=sin(1.3*x);
+g2=cos(-6.5*x);
+g3=sin(-.45*x);
+
+al00=g0'*g0;
+al01=g0'*g1;
+al02=g0'*g2;
+al03=g0'*g3;
+al10=al01;
+al11=g1'*g1;
+al12=g1'*g2;
+al13=g1'*g3;
+al20=al02;
+al21=al12;
+al22=g2'*g2;
+al23=g2'*g3;
+al30=al03;
+al31=al13;
+al32=al23;
+al33=g3'*g3;
+
+b0=fx'*g0;
+b1=fx'*g1;
+b2=fx'*g2;
+b3=fx'*g3;
+
+Alpha=[al00 al01 al02 al03; 
+    al10 al11 al12 al13; 
+    al20 al21 al22 al23;
+    al30 al31 al32 al33;];
+
+B=[b0 b1 b2 b3]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+a3=A(4)
+
+xc=[min(x):(max(x)-min(x))/10000:max(x)]';
+gc0=cos(7.3*xc);
+gc1=sin(1.3*xc);
+gc2=cos(-6.5*xc);
+gc3=sin(-.45*xc);
+pc=a0*gc0+a1*gc1+a2*gc2+a3*gc3;
+
+p=a0*g0+a1*g1+a2*g2+a3*g3;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+tt1='linear curve fitting using trig functions';
+tt2='g0=cos(7.3*x) ';
+tt3='g1=sin(1.3*x) ';
+tt4='g2=cos(-6.5*x) ';
+tt5='g3=sin(-0.45*x) ';
+name='B.D.Schoenrock ';
+tta=[tt1,'\newline',tt2,tt3];
+tt=[tta,tt4,tt5,'\newline',name,date];
+la0=['a0 = ',num2str(a0)];
+la1=['a1 = ',num2str(a1)];
+la2=['a2 = ',num2str(a2)];
+la3=['a3 = ',num2str(a3)];
+lss=['sm Sq = ',num2str(ss)];
+lssdp=['sm Sq DP = ',num2str(ssdp)];
+
+figure
+hold on;
+title(tt);
+plot(x,fx,'b*')
+plot(xc,pc,'r')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+xlabel('x in unitless numbers')
+ylabel('f(x) in unitless numbers')
+
+legend('raw data','fitted curve',la0,la1,la2,la3,lss,lssdp,3);
+legend('boxoff')
+
+%{
+a0 = 4.9916
+a1 = -7.1648
+a2 = -2.2472
+a3 = 2.6489
+ss = 6.0038
+ssdp = 0.0373
+%}

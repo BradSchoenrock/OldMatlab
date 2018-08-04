@@ -1,0 +1,81 @@
+%program for linear curve fitting with exponential functions
+clear all;
+
+load('lincrvexph.mat','-ascii');
+
+x=lincrvexph(:,1);
+fx=lincrvexph(:,2);
+
+g0=exp(2*x);
+g1=exp(6*x);
+g2=exp(-4*x);
+
+al00=g0'*g0;
+al01=g0'*g1;
+al02=g0'*g2;
+al10=al01;
+al11=g1'*g1;
+al12=g1'*g2;
+al20=al02;
+al21=al12;
+al22=g2'*g2;
+
+b0=fx'*g0;
+b1=fx'*g1;
+b2=fx'*g2;
+
+Alpha=[al00 al01 al02; al10 al11 al12; al20 al21 al22];
+B=[b0 b1 b2]';
+
+A=Alpha\B;
+a0=A(1)
+a1=A(2)
+a2=A(3)
+
+xc=[min(x):(max(x)-min(x))/10000:max(x)]';
+gc0=exp(2*xc);
+gc1=exp(6*xc);
+gc2=exp(-4*xc);
+pc=a0*gc0+a1*gc1+a2*gc2;
+
+p=a0*g0+a1*g1+a2*g2;
+er=p-fx;
+ss=er'*er
+ssdp=ss/size(x,1)
+
+tt1='linear curve fitting with exponetials';
+tt2='g0=exp(2*x)';
+tt3='g1=exp(6*x)';
+tt4='g2=exp(-4*x)';
+name='B.D.Schoenrock - ';
+tta=[tt1,'\newline',tt2,'  ',tt3,'  '];
+tt=[tta,tt4,'\newline',name,date];
+la0=['a0 = ',num2str(a0)];
+la1=['a1 = ',num2str(a1)];
+la2=['a2 = ',num2str(a2)];
+lss=['sm Sq = ',num2str(ss)];
+lssdp=['sm Sq DP = ',num2str(ssdp)];
+
+figure
+hold on;
+title(tt);
+plot(x,fx,'b*')
+plot(xc,pc,'r')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+plot(max(x),min(fx),'w.')
+xlabel('x in unitless numbers')
+ylabel('f(x) in unitless numbers')
+
+legend('raw data','fitted curve',la0,la1,la2,lss,lssdp,1);
+legend('boxoff')
+
+%{
+a0 = 2.9357
+a1 = -3.3310
+a2 = 5.2757
+ss = 6.7579e+005
+ssdp = 6.4361e+003
+%}
